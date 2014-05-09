@@ -8,20 +8,23 @@ using HackGame.Client.Filters;
 using HackGame.Client.Scope.Controller;
 using HackGame.Client.Services;
 using HackGame.Client.Utils;
+using jQueryApi;
 using ng;
 
 namespace HackGame.Client
 {
     public static class BuildAngular
-    {
+    { 
         private const string ScopeName = "$scope";
         private const string RootScopeName = "$rootScope";
         private const string CompileName = "$compile";
-        private const string Http = "$http";
+        private const string Http = "$http"; 
         private const string TemplateCache = "$templateCache";
         static BuildAngular()
-        {
-            Setup();
+        {   jQuery.OnDocumentReady(() =>
+                                   {
+                                       Setup();
+                                   });
         }
 
         public static void Setup()

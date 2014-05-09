@@ -1,4 +1,5 @@
-﻿using HackGame.Client.Scope.Controller;
+﻿using System.Html;
+using HackGame.Client.Scope.Controller;
 using HackGame.Client.Services;
 
 namespace HackGame.Client.Controllers
@@ -22,7 +23,6 @@ namespace HackGame.Client.Controllers
 
             this.scope.Callback.WindowClosed = () => {   };
             //scope.SwingAway(SwingDirection.Left, false, null);
-
 
             scope.Watch("model.selectedLevel", () =>
                                                {

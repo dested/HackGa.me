@@ -88,6 +88,7 @@
 		this.$scope.callback.windowClosed = function() {
 		};
 		//scope.SwingAway(SwingDirection.Left, false, null);
+		window.alert('food');
 		scope.$watch('model.selectedLevel', ss.mkdel(this, function() {
 			if (ss.isValue(this.$scope.model.selectedLevel)) {
 				this.$scope.callback.loadLevel(this.$scope.model.selectedLevel);

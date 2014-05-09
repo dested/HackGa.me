@@ -32,7 +32,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="BuildAngular.cs" />
-    <Compile Include="Class1.cs" />
     <Compile Include="Scope\Directive\Canvas\CanvasAssetFrameScope.cs" />
     <Compile Include="Utils\Constants.cs" />
     <Compile Include="Controllers\LevelSelectorController.cs" />
@@ -78,11 +77,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Partials\Areas\AssetFrameEditor.html" />
     <Content Include="Partials\Areas\LevelSelector.html" />
-    <Content Include="Partials\Areas\ObjectFrameworkEditor.html" />
-    <Content Include="Partials\Areas\ObjectFrameworkList.html" />
-    <Content Include="Partials\Areas\TileEditor.html" />
     <Content Include="Partials\Directives\fancyHorizontalList.html" />
     <Content Include="Partials\Directives\fancyHorizontalListIndex.html" />
     <Content Include="Partials\Directives\fancyList.html" />

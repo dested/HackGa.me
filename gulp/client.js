@@ -5,6 +5,7 @@ var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var clean = require('gulp-clean');
 var insert = require('gulp-insert');
+var watch = require('gulp-watch');
 
 var codePaths = ['HackGame.Client/bin/debug/**/*.js'];
 var uiPaths = ['HackGame.Client/Partials/Areas/**/*.*'];
@@ -21,6 +22,12 @@ gulp.task('client.packageScripts', function () {
 gulp.task('client.packageViews', function () {
     return gulp.src(uiPaths)
         .pipe(gulp.dest('output/partials/UIs'));
+}); 
+gulp.task('client.watch', function () {
+    gulp.watch(codePaths, ['client.packageScripts']);
+    gulp.watch(uiPaths, ['client.packageViews']);
+    gulp.watch(directivePaths, ['client.packageDirectives']);
+
 });
 gulp.task('client.packageDirectives', function () {
     return gulp.src(directivePaths)

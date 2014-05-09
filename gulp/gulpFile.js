@@ -24,6 +24,7 @@ gulp.task('client', function (callback) {
             'client.packageDirectives',
             'client.packageScripts'
         ],
+        'client.watch',
         'client.express',
         callback);
 }); 
