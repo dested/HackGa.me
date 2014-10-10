@@ -1,4 +1,4 @@
-﻿(function() {
+(function() {
 	'use strict';
 	var $asm = {};
 	global.HackGame = global.HackGame || {};
@@ -6,6 +6,7 @@
 	global.HackGame.Client.Directives = global.HackGame.Client.Directives || {};
 	global.HackGame.Client.Directives.Canvas = global.HackGame.Client.Directives.Canvas || {};
 	global.HackGame.Client.Filters = global.HackGame.Client.Filters || {};
+	global.HackGame.Client.Level = global.HackGame.Client.Level || {};
 	global.HackGame.Client.Scope = global.HackGame.Client.Scope || {};
 	global.HackGame.Client.Scope.Controller = global.HackGame.Client.Scope.Controller || {};
 	global.HackGame.Client.Scope.Directive = global.HackGame.Client.Scope.Directive || {};
@@ -16,6 +17,7 @@
 	////////////////////////////////////////////////////////////////////////////////
 	// HackGame.Client.BuildAngular
 	var $HackGame_Client_BuildAngular = function() {
+		$HackGame_Client_BuildAngular.setup();
 	};
 	$HackGame_Client_BuildAngular.__typeName = 'HackGame.Client.BuildAngular';
 	$HackGame_Client_BuildAngular.setup = function() {
@@ -67,13 +69,20 @@
 	};
 	global.HackGame.Client.BuildAngular = $HackGame_Client_BuildAngular;
 	////////////////////////////////////////////////////////////////////////////////
-	// HackGame.Client.Class1
-	var $HackGame_Client_Class1 = function() {
+	// HackGame.Client.Program
+	var $HackGame_Client_Program = function() {
+		this.manager = null;
+		this.manager = new $HackGame_Client_Level_Manager();
+		$(ss.mkdel(this, function() {
+			this.manager.init();
+			//                BuildAngular.Setup();
+		}));
 	};
-	$HackGame_Client_Class1.__typeName = 'HackGame.Client.Class1';
-	$HackGame_Client_Class1.main = function() {
+	$HackGame_Client_Program.__typeName = 'HackGame.Client.Program';
+	$HackGame_Client_Program.main = function() {
+		new $HackGame_Client_Program();
 	};
-	global.HackGame.Client.Class1 = $HackGame_Client_Class1;
+	global.HackGame.Client.Program = $HackGame_Client_Program;
 	////////////////////////////////////////////////////////////////////////////////
 	// HackGame.Client.Controllers.LevelSelectorController
 	var $HackGame_Client_Controllers_$LevelSelectorController = function(scope, createUIService) {
@@ -88,7 +97,6 @@
 		this.$scope.callback.windowClosed = function() {
 		};
 		//scope.SwingAway(SwingDirection.Left, false, null);
-		window.alert('food');
 		scope.$watch('model.selectedLevel', ss.mkdel(this, function() {
 			if (ss.isValue(this.$scope.model.selectedLevel)) {
 				this.$scope.callback.loadLevel(this.$scope.model.selectedLevel);
@@ -235,6 +243,95 @@
 	};
 	$HackGame_Client_Filters_SwitchFilter.__typeName = 'HackGame.Client.Filters.SwitchFilter';
 	global.HackGame.Client.Filters.SwitchFilter = $HackGame_Client_Filters_SwitchFilter;
+	////////////////////////////////////////////////////////////////////////////////
+	// HackGame.Client.Level.Board
+	var $HackGame_Client_Level_Board = function() {
+	};
+	$HackGame_Client_Level_Board.__typeName = 'HackGame.Client.Level.Board';
+	global.HackGame.Client.Level.Board = $HackGame_Client_Level_Board;
+	////////////////////////////////////////////////////////////////////////////////
+	// HackGame.Client.Level.Character
+	var $HackGame_Client_Level_Character = function(startingState) {
+		this.$1$LimbsField = null;
+		this.$1$StateField = null;
+		this.set_state(startingState);
+		this.set_limbs(new $HackGame_Client_Level_CharacterBody());
+		var standingSchema = new $HackGame_Client_Level_CharacterBodySchema();
+		standingSchema.init();
+		this.get_limbs().applySchema(standingSchema);
+	};
+	$HackGame_Client_Level_Character.__typeName = 'HackGame.Client.Level.Character';
+	global.HackGame.Client.Level.Character = $HackGame_Client_Level_Character;
+	////////////////////////////////////////////////////////////////////////////////
+	// HackGame.Client.Level.CharacterBody
+	var $HackGame_Client_Level_CharacterBody = function() {
+		this.$1$LeftLegField = null;
+		this.$1$RightLegField = null;
+		this.$1$LeftArmField = null;
+		this.$1$RightArmField = null;
+		this.$1$HeadField = null;
+		this.$1$BodyField = null;
+		this.$1$TickCharacterField = null;
+	};
+	$HackGame_Client_Level_CharacterBody.__typeName = 'HackGame.Client.Level.CharacterBody';
+	global.HackGame.Client.Level.CharacterBody = $HackGame_Client_Level_CharacterBody;
+	////////////////////////////////////////////////////////////////////////////////
+	// HackGame.Client.Level.CharacterBodyPart
+	var $HackGame_Client_Level_CharacterBodyPart = function() {
+		this.$1$ImageField = null;
+		this.$1$OffsetField = null;
+	};
+	$HackGame_Client_Level_CharacterBodyPart.__typeName = 'HackGame.Client.Level.CharacterBodyPart';
+	global.HackGame.Client.Level.CharacterBodyPart = $HackGame_Client_Level_CharacterBodyPart;
+	////////////////////////////////////////////////////////////////////////////////
+	// HackGame.Client.Level.CharacterBodySchema
+	var $HackGame_Client_Level_CharacterBodySchema = function() {
+		this.$1$LeftLegField = null;
+		this.$1$RightLegField = null;
+		this.$1$LeftArmField = null;
+		this.$1$RightArmField = null;
+		this.$1$HeadField = null;
+		this.$1$BodyField = null;
+	};
+	$HackGame_Client_Level_CharacterBodySchema.__typeName = 'HackGame.Client.Level.CharacterBodySchema';
+	global.HackGame.Client.Level.CharacterBodySchema = $HackGame_Client_Level_CharacterBodySchema;
+	////////////////////////////////////////////////////////////////////////////////
+	// HackGame.Client.Level.CharacterState
+	var $HackGame_Client_Level_CharacterState = function() {
+		this.$1$LocationField = null;
+	};
+	$HackGame_Client_Level_CharacterState.__typeName = 'HackGame.Client.Level.CharacterState';
+	global.HackGame.Client.Level.CharacterState = $HackGame_Client_Level_CharacterState;
+	////////////////////////////////////////////////////////////////////////////////
+	// HackGame.Client.Level.ImageUtil
+	var $HackGame_Client_Level_ImageUtil = function() {
+	};
+	$HackGame_Client_Level_ImageUtil.__typeName = 'HackGame.Client.Level.ImageUtil';
+	$HackGame_Client_Level_ImageUtil.loadImage = function(imageSrc) {
+		var $t1 = document.createElement('img');
+		var image = ss.cast($t1, ss.isValue($t1) && (ss.isInstanceOfType($t1, Element) && $t1.tagName === 'IMG'));
+		image.src = imageSrc;
+		return image;
+	};
+	global.HackGame.Client.Level.ImageUtil = $HackGame_Client_Level_ImageUtil;
+	////////////////////////////////////////////////////////////////////////////////
+	// HackGame.Client.Level.Manager
+	var $HackGame_Client_Level_Manager = function() {
+		this.$canvas = null;
+		this.$1$CharacterField = null;
+	};
+	$HackGame_Client_Level_Manager.__typeName = 'HackGame.Client.Level.Manager';
+	global.HackGame.Client.Level.Manager = $HackGame_Client_Level_Manager;
+	////////////////////////////////////////////////////////////////////////////////
+	// HackGame.Client.Level.Point
+	var $HackGame_Client_Level_Point = function(x, y) {
+		this.$1$XField = 0;
+		this.$1$YField = 0;
+		this.set_x(x);
+		this.set_y(y);
+	};
+	$HackGame_Client_Level_Point.__typeName = 'HackGame.Client.Level.Point';
+	global.HackGame.Client.Level.Point = $HackGame_Client_Level_Point;
 	////////////////////////////////////////////////////////////////////////////////
 	// HackGame.Client.Scope._KeepBaseScopeAlive
 	var $HackGame_Client_Scope__KeepBaseScopeAlive = function() {
@@ -431,6 +528,58 @@
 	$HackGame_Client_Services_ManagedScope.__typeName = 'HackGame.Client.Services.ManagedScope';
 	global.HackGame.Client.Services.ManagedScope = $HackGame_Client_Services_ManagedScope;
 	////////////////////////////////////////////////////////////////////////////////
+	// HackGame.Client.Utils.CanvasInformation
+	var $HackGame_Client_Utils_CanvasInformation = function(ele) {
+		this.context = null;
+		this.jElement = null;
+		this.element = null;
+		this.context = ss.cast(ss.cast(ele, ss.isValue(ele) && (ss.isInstanceOfType(ele, Element) && ele.tagName === 'CANVAS')).getContext('2d'), CanvasRenderingContext2D);
+		this.jElement = $(ele);
+		this.element = ss.cast(ele, ss.isValue(ele) && (ss.isInstanceOfType(ele, Element) && ele.tagName === 'CANVAS'));
+	};
+	$HackGame_Client_Utils_CanvasInformation.__typeName = 'HackGame.Client.Utils.CanvasInformation';
+	$HackGame_Client_Utils_CanvasInformation.$ctor1 = function(context, jElement) {
+		this.context = null;
+		this.jElement = null;
+		this.element = null;
+		this.context = context;
+		this.jElement = jElement;
+		var $t1 = jElement[0];
+		this.element = ss.cast($t1, ss.isValue($t1) && (ss.isInstanceOfType($t1, Element) && $t1.tagName === 'CANVAS'));
+	};
+	$HackGame_Client_Utils_CanvasInformation.get_blackPixel = function() {
+		if (ss.isNullOrUndefined($HackGame_Client_Utils_CanvasInformation.$blackPixel)) {
+			var m = $HackGame_Client_Utils_CanvasInformation.create(0, 0, false);
+			m.context.fillStyle = 'black';
+			m.context.fillRect(0, 0, 1, 1);
+			$HackGame_Client_Utils_CanvasInformation.$blackPixel = m.element;
+		}
+		return $HackGame_Client_Utils_CanvasInformation.$blackPixel;
+	};
+	$HackGame_Client_Utils_CanvasInformation.create = function(w, h, pixelated) {
+		var $t1 = document.createElement('canvas');
+		var canvas = ss.cast($t1, ss.isValue($t1) && (ss.isInstanceOfType($t1, Element) && $t1.tagName === 'CANVAS'));
+		return $HackGame_Client_Utils_CanvasInformation.create$1(canvas, w, h, pixelated);
+	};
+	$HackGame_Client_Utils_CanvasInformation.create$1 = function(canvas, w, h, pixelated) {
+		if (w === 0) {
+			w = 1;
+		}
+		if (h === 0) {
+			h = 1;
+		}
+		canvas.width = w;
+		canvas.height = h;
+		var ctx = ss.cast(canvas.getContext('2d'), CanvasRenderingContext2D);
+		if (pixelated) {
+			ctx.webkitImageSmoothingEnabled = false;
+			ctx.mozImageSmoothingEnabled = false;
+			ctx.imageSmoothingEnabled = false;
+		}
+		return new $HackGame_Client_Utils_CanvasInformation.$ctor1(ctx, $(canvas));
+	};
+	global.HackGame.Client.Utils.CanvasInformation = $HackGame_Client_Utils_CanvasInformation;
+	////////////////////////////////////////////////////////////////////////////////
 	// HackGame.Client.Utils.Constants
 	var $HackGame_Client_Utils_Constants = function() {
 	};
@@ -443,7 +592,7 @@
 	$HackGame_Client_Utils_Extensions.__typeName = 'HackGame.Client.Utils.Extensions';
 	global.HackGame.Client.Utils.Extensions = $HackGame_Client_Utils_Extensions;
 	ss.initClass($HackGame_Client_BuildAngular, $asm, {});
-	ss.initClass($HackGame_Client_Class1, $asm, {});
+	ss.initClass($HackGame_Client_Program, $asm, {});
 	ss.initClass($HackGame_Client_Controllers_$LevelSelectorController, $asm, {});
 	ss.initClass($HackGame_Client_Directives_DraggableDirective, $asm, {
 		$linkFn: function(scope, element, attrs) {
@@ -704,6 +853,253 @@
 			return (val ? on : off);
 		}
 	});
+	ss.initClass($HackGame_Client_Level_Board, $asm, {});
+	ss.initClass($HackGame_Client_Level_Character, $asm, {
+		get_limbs: function() {
+			return this.$1$LimbsField;
+		},
+		set_limbs: function(value) {
+			this.$1$LimbsField = value;
+		},
+		get_state: function() {
+			return this.$1$StateField;
+		},
+		set_state: function(value) {
+			this.$1$StateField = value;
+		},
+		tick: function(updateTime) {
+			this.$tickPhysics(updateTime);
+			this.get_limbs().tick(updateTime, this.get_state());
+		},
+		$tickPhysics: function(updateTime) {
+			var $t1 = this.get_state().get_location();
+			$t1.set_x($t1.get_x() + 1);
+		},
+		render: function(context, updateTime) {
+			context.save();
+			context.translate(this.get_state().get_location().get_x(), this.get_state().get_location().get_y());
+			context.save();
+			context.translate(ss.Int32.div(-this.get_limbs().get_head().get_image().width, 2), ss.Int32.div(-this.get_limbs().get_head().get_image().height, 2));
+			context.drawImage(this.get_limbs().get_head().get_image(), this.get_limbs().get_head().get_offset().get_x(), this.get_limbs().get_head().get_offset().get_y());
+			context.restore();
+			context.save();
+			context.translate(ss.Int32.div(-this.get_limbs().get_body().get_image().width, 2), ss.Int32.div(-this.get_limbs().get_body().get_image().height, 2));
+			context.drawImage(this.get_limbs().get_body().get_image(), this.get_limbs().get_body().get_offset().get_x(), this.get_limbs().get_body().get_offset().get_y());
+			context.restore();
+			context.save();
+			context.translate(ss.Int32.div(-this.get_limbs().get_leftArm().get_image().width, 2), ss.Int32.div(-this.get_limbs().get_leftArm().get_image().height, 2));
+			context.drawImage(this.get_limbs().get_leftArm().get_image(), this.get_limbs().get_leftArm().get_offset().get_x(), this.get_limbs().get_leftArm().get_offset().get_y());
+			context.restore();
+			context.save();
+			context.translate(ss.Int32.div(-this.get_limbs().get_rightArm().get_image().width, 2), ss.Int32.div(-this.get_limbs().get_rightArm().get_image().height, 2));
+			context.drawImage(this.get_limbs().get_rightArm().get_image(), this.get_limbs().get_rightArm().get_offset().get_x(), this.get_limbs().get_rightArm().get_offset().get_y());
+			context.restore();
+			context.save();
+			context.translate(ss.Int32.div(-this.get_limbs().get_leftLeg().get_image().width, 2), ss.Int32.div(-this.get_limbs().get_leftLeg().get_image().height, 2));
+			context.drawImage(this.get_limbs().get_leftLeg().get_image(), this.get_limbs().get_leftLeg().get_offset().get_x(), this.get_limbs().get_leftLeg().get_offset().get_y());
+			context.restore();
+			context.save();
+			context.translate(ss.Int32.div(-this.get_limbs().get_rightLeg().get_image().width, 2), ss.Int32.div(-this.get_limbs().get_rightLeg().get_image().height, 2));
+			context.drawImage(this.get_limbs().get_rightLeg().get_image(), this.get_limbs().get_rightLeg().get_offset().get_x(), this.get_limbs().get_rightLeg().get_offset().get_y());
+			context.restore();
+			context.restore();
+		}
+	});
+	ss.initClass($HackGame_Client_Level_CharacterBody, $asm, {
+		get_leftLeg: function() {
+			return this.$1$LeftLegField;
+		},
+		set_leftLeg: function(value) {
+			this.$1$LeftLegField = value;
+		},
+		get_rightLeg: function() {
+			return this.$1$RightLegField;
+		},
+		set_rightLeg: function(value) {
+			this.$1$RightLegField = value;
+		},
+		get_leftArm: function() {
+			return this.$1$LeftArmField;
+		},
+		set_leftArm: function(value) {
+			this.$1$LeftArmField = value;
+		},
+		get_rightArm: function() {
+			return this.$1$RightArmField;
+		},
+		set_rightArm: function(value) {
+			this.$1$RightArmField = value;
+		},
+		get_head: function() {
+			return this.$1$HeadField;
+		},
+		set_head: function(value) {
+			this.$1$HeadField = value;
+		},
+		get_body: function() {
+			return this.$1$BodyField;
+		},
+		set_body: function(value) {
+			this.$1$BodyField = value;
+		},
+		get_tickCharacter: function() {
+			return this.$1$TickCharacterField;
+		},
+		set_tickCharacter: function(value) {
+			this.$1$TickCharacterField = value;
+		},
+		applySchema: function(schema) {
+			this.set_leftLeg(schema.get_leftLeg());
+			this.set_rightLeg(schema.get_rightLeg());
+			this.set_leftArm(schema.get_leftArm());
+			this.set_rightArm(schema.get_rightArm());
+			this.set_head(schema.get_head());
+			this.set_body(schema.get_body());
+			this.set_tickCharacter(ss.mkdel(schema, schema.tickCharacter));
+		},
+		tick: function(updateTime, characterState) {
+			this.get_tickCharacter()(updateTime, characterState);
+		}
+	});
+	ss.initClass($HackGame_Client_Level_CharacterBodyPart, $asm, {
+		get_image: function() {
+			return this.$1$ImageField;
+		},
+		set_image: function(value) {
+			this.$1$ImageField = value;
+		},
+		get_offset: function() {
+			return this.$1$OffsetField;
+		},
+		set_offset: function(value) {
+			this.$1$OffsetField = value;
+		}
+	});
+	ss.initClass($HackGame_Client_Level_CharacterBodySchema, $asm, {
+		get_leftLeg: function() {
+			return this.$1$LeftLegField;
+		},
+		set_leftLeg: function(value) {
+			this.$1$LeftLegField = value;
+		},
+		get_rightLeg: function() {
+			return this.$1$RightLegField;
+		},
+		set_rightLeg: function(value) {
+			this.$1$RightLegField = value;
+		},
+		get_leftArm: function() {
+			return this.$1$LeftArmField;
+		},
+		set_leftArm: function(value) {
+			this.$1$LeftArmField = value;
+		},
+		get_rightArm: function() {
+			return this.$1$RightArmField;
+		},
+		set_rightArm: function(value) {
+			this.$1$RightArmField = value;
+		},
+		get_head: function() {
+			return this.$1$HeadField;
+		},
+		set_head: function(value) {
+			this.$1$HeadField = value;
+		},
+		get_body: function() {
+			return this.$1$BodyField;
+		},
+		set_body: function(value) {
+			this.$1$BodyField = value;
+		},
+		init: function() {
+			var $t1 = new $HackGame_Client_Level_CharacterBodyPart();
+			$t1.set_image($HackGame_Client_Level_ImageUtil.loadImage('/images/character/leftLeg.png'));
+			$t1.set_offset(new $HackGame_Client_Level_Point(-15, 40));
+			this.set_leftLeg($t1);
+			var $t2 = new $HackGame_Client_Level_CharacterBodyPart();
+			$t2.set_image($HackGame_Client_Level_ImageUtil.loadImage('/images/character/rightLeg.png'));
+			$t2.set_offset(new $HackGame_Client_Level_Point(20, 40));
+			this.set_rightLeg($t2);
+			var $t3 = new $HackGame_Client_Level_CharacterBodyPart();
+			$t3.set_image($HackGame_Client_Level_ImageUtil.loadImage('/images/character/leftArm.png'));
+			$t3.set_offset(new $HackGame_Client_Level_Point(-15, -10));
+			this.set_leftArm($t3);
+			var $t4 = new $HackGame_Client_Level_CharacterBodyPart();
+			$t4.set_image($HackGame_Client_Level_ImageUtil.loadImage('/images/character/rightArm.png'));
+			$t4.set_offset(new $HackGame_Client_Level_Point(25, -10));
+			this.set_rightArm($t4);
+			var $t5 = new $HackGame_Client_Level_CharacterBodyPart();
+			$t5.set_image($HackGame_Client_Level_ImageUtil.loadImage('/images/character/head.png'));
+			$t5.set_offset(new $HackGame_Client_Level_Point(0, -40));
+			this.set_head($t5);
+			var $t6 = new $HackGame_Client_Level_CharacterBodyPart();
+			$t6.set_image($HackGame_Client_Level_ImageUtil.loadImage('/images/character/body.png'));
+			$t6.set_offset(new $HackGame_Client_Level_Point(0, 0));
+			this.set_body($t6);
+		},
+		tickCharacter: function(updateTime, characterState) {
+		}
+	});
+	ss.initClass($HackGame_Client_Level_CharacterState, $asm, {
+		get_location: function() {
+			return this.$1$LocationField;
+		},
+		set_location: function(value) {
+			this.$1$LocationField = value;
+		}
+	});
+	ss.initClass($HackGame_Client_Level_ImageUtil, $asm, {});
+	ss.initClass($HackGame_Client_Level_Manager, $asm, {
+		init: function() {
+			this.$canvas = new $HackGame_Client_Utils_CanvasInformation(document.getElementById('board'));
+			window.addEventListener('resize', ss.mkdel(this, function(e) {
+				this.resizeCanvas(true);
+			}));
+			$(document).resize(ss.mkdel(this, function(e1) {
+				this.resizeCanvas(true);
+			}));
+			window.setInterval(ss.mkdel(this, this.tick), 16);
+			window.setInterval(ss.mkdel(this, this.render), 16);
+			this.resizeCanvas(true);
+			var $t1 = new $HackGame_Client_Level_CharacterState();
+			$t1.set_location(new $HackGame_Client_Level_Point(50, 200));
+			this.set_character(new $HackGame_Client_Level_Character($t1));
+		},
+		get_character: function() {
+			return this.$1$CharacterField;
+		},
+		set_character: function(value) {
+			this.$1$CharacterField = value;
+		},
+		resizeCanvas: function(resetOverride) {
+			var canvasWidth = $(window).width();
+			var canvasHeight = $(window).height();
+			this.$canvas.jElement.attr('width', canvasWidth.toString());
+			this.$canvas.jElement.attr('height', canvasHeight.toString());
+		},
+		tick: function() {
+			this.get_character().tick(new ss.TimeSpan(0));
+		},
+		render: function() {
+			this.$canvas.clear();
+			this.get_character().render(this.$canvas.context, new ss.TimeSpan(0));
+		}
+	});
+	ss.initClass($HackGame_Client_Level_Point, $asm, {
+		get_x: function() {
+			return this.$1$XField;
+		},
+		set_x: function(value) {
+			this.$1$XField = value;
+		},
+		get_y: function() {
+			return this.$1$YField;
+		},
+		set_y: function(value) {
+			this.$1$YField = value;
+		}
+	});
 	ss.initClass($HackGame_Client_Scope__KeepBaseScopeAlive, $asm, {});
 	ss.initClass($HackGame_Client_Scope_Controller_LevelModel, $asm, {});
 	ss.initClass($HackGame_Client_Services_ManagedScope, $asm, {}, HackGame.Client.Scope.BaseScope);
@@ -804,6 +1200,12 @@
 			return new (ss.makeGenericType($HackGame_Client_Services_CreatedUI$1, [$HackGame_Client_Services_ManagedScope]))(scope, item);
 		}
 	});
+	ss.initClass($HackGame_Client_Utils_CanvasInformation, $asm, {
+		clear: function() {
+			this.element.width = this.element.width;
+		}
+	});
+	$HackGame_Client_Utils_CanvasInformation.$ctor1.prototype = $HackGame_Client_Utils_CanvasInformation.prototype;
 	ss.initClass($HackGame_Client_Utils_Constants, $asm, {});
 	ss.initClass($HackGame_Client_Utils_Extensions, $asm, {});
 	$HackGame_Client_Controllers_$LevelSelectorController.$name = 'LevelSelectorController';
@@ -827,5 +1229,6 @@
 	$HackGame_Client_BuildAngular.$compileName = '$compile';
 	$HackGame_Client_BuildAngular.$http = '$http';
 	$HackGame_Client_BuildAngular.$templateCache = '$templateCache';
-	$HackGame_Client_BuildAngular.setup();
+	$HackGame_Client_Utils_CanvasInformation.$blackPixel = null;
+	$HackGame_Client_Program.main();
 })();

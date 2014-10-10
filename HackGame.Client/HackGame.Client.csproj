@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{648395FB-3A09-4F9E-8C4A-2A250C2529A2}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>HackGame.Client</RootNamespace>
     <AssemblyName>HackGame.Client</AssemblyName>
@@ -30,9 +30,16 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="BuildAngular.cs" />
+    <Compile Include="Level\Board.cs" />
+    <Compile Include="Level\Character.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Scope\Directive\Canvas\CanvasAssetFrameScope.cs" />
+    <Compile Include="Utils\CanvasInformation.cs" />
     <Compile Include="Utils\Constants.cs" />
     <Compile Include="Controllers\LevelSelectorController.cs" />
     <Compile Include="Directives\Canvas\CanvasAssetFrameDirective.cs" />

@@ -17,6 +17,10 @@ body
     width: 100%;
     overflow: hidden;
 }
+#board {
+    position: absolute;
+    left: 0;top: 0;
+}
 
 .center
 {

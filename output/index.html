@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html  >
+<html>
 <head>
     <title>Hack Game</title>
 
@@ -9,7 +9,7 @@
     <script type="text/javascript" src="vendor/angular-route.js"> </script>
     <script type="text/javascript" src="vendor/ui-utils.js"> </script>
     <script type="text/javascript" src="vendor/ui-bootstrap-tpls-0.10.0.js"> </script>
-    
+
     <script src="vendor/Stats.js" type="text/javascript"> </script>
     <script src="vendor/keyboardjs.js" type="text/javascript"> </script>
     <script src="vendor/ui-codemirror.js" type="text/javascript"> </script>
@@ -21,7 +21,11 @@
     <script type="text/javascript" src="js/HackGame.Client.js"> </script>
 </head>
 <body style="background-color: #9292be;">
+    <canvas id="board"></canvas>
+
     <div ng-view>
-    </div> 
+    </div>
+
+
 </body>
 </html>
