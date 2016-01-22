@@ -10,7 +10,7 @@ export class Game {
         console.log('hi');
 
         this.level = new Level();
-        this.hero = new Hero();
+        this.hero = new Hero(this.level);
         this.level.setHero(this.hero, 5, 5);
 
 
@@ -31,9 +31,6 @@ export class Game {
     private render():void {
         this.level.render(this.context);
     }
-
-
-
 
     private resizeCanvas():void{
         this.canvas.width = window.innerWidth;

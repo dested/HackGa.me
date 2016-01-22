@@ -11,10 +11,13 @@ export class Level {
     }
 
     render(context:CanvasRenderingContext2D):void {
-        context.fillRect(0, 0, 100, 100);
+
+        this.hero.render(context);
+
     }
 
     tick():void {
+        this.hero.tick();
 
     }
 }
