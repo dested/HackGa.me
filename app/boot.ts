@@ -1,3 +1,10 @@
+//"use strict";
+
 import {Game} from "./game";
 
-new Game();
+import {AssetManager} from './assetManager';
+
+AssetManager.loadAssets().then(()=> {
+    new Game();
+});
+

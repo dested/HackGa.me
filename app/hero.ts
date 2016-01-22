@@ -1,4 +1,7 @@
+//"use strict";
+
 import {Level} from "./level";
+import {AssetManager} from "./assetManager";
 
 export class Hero {
     private level:Level;
@@ -16,8 +19,7 @@ export class Hero {
     }
 
     render(context:CanvasRenderingContext2D):void{
-
-
+        context.drawImage(AssetManager.getAsset('hero'),this.x,this.y);
     }
 
     private checkCollision():void {

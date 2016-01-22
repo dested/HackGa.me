@@ -1,3 +1,5 @@
+//"use strict";
+
 import {Hero} from "./hero";
 import {Level} from "./level";
 export class Game {

@@ -1,15 +1,28 @@
+//"use strict";
+
 export class AssetManager {
 
-    static loadAssets():void{
 
+    private static assets:{[key:string]:HTMLImageElement};
+
+    static loadAssets():PromiseLike<void> {
+        this.assets = {};
+        return Promise.all([this.loadAsset("hero", "assets/hero.png")]);
     }
-    private static loadAsset(url:string):Image{
-        let image=new Image();
 
-        return image;
+    private static loadAsset(key:string, url:string):PromiseLike<HTMLImageElement> {
+        return new Promise<HTMLImageElement>((resolve)=> {
+            let image = new Image();
+
+            image.onload = ()=> {
+                resolve(image);
+            };
+            image.src = url;
+            this.assets[key] = image;
+        });
     }
-    static getAsset(key:string):Image {
 
-
+    static getAsset(key:string):HTMLImageElement {
+        return this.assets[key];
     }
 }

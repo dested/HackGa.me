@@ -1,3 +1,5 @@
+//"use strict";
+
 import {Hero} from "./hero";
 export class Level {
     private hero:Hero;
@@ -8,6 +10,8 @@ export class Level {
 
     setHero(hero:Hero, x:Number, y:Number):void {
         this.hero = hero;
+        this.hero.x = x;
+        this.hero.y = y;
     }
 
     render(context:CanvasRenderingContext2D):void {
