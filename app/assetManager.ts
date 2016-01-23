@@ -7,7 +7,10 @@ export class AssetManager {
 
     static loadAssets():PromiseLike<void> {
         this.assets = {};
-        return Promise.all([this.loadAsset("hero", "assets/hero.png")]);
+        return Promise.all([
+            this.loadAsset("hero", "assets/hero.png"),
+            this.loadAsset("block", "assets/block.png")
+        ]);
     }
 
     private static loadAsset(key:string, url:string):PromiseLike<HTMLImageElement> {

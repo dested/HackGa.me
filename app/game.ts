@@ -21,7 +21,9 @@ export class Game {
 
         window.addEventListener('resize', this.resizeCanvas, false);
 
-        this.tick();
+        setInterval(()=> {
+            this.tick();
+        }, 1000 / 16);
         this.renderFrame();
         this.resizeCanvas();
     }
@@ -31,19 +33,24 @@ export class Game {
     }
 
     private render():void {
+        this.context.save();
+        this.context.scale(2,2);
         this.level.render(this.context);
+        this.context.restore();
     }
 
-    private resizeCanvas():void{
+    private resizeCanvas():void {
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
     }
 
     private renderFrame() {
         window.requestAnimationFrame(()=> {
-            this.canvas.width=this.canvas.width;
+            window.stats.begin();
+            this.canvas.width = this.canvas.width;
             this.render();
-            this.renderFrame()
+            this.renderFrame();
+            window.stats.end();
         });
     }
 }
