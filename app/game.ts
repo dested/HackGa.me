@@ -19,6 +19,7 @@ export class Game {
         this.canvas = <HTMLCanvasElement>document.getElementById('game');
         this.context = this.canvas.getContext('2d');
 
+
         window.addEventListener('resize', this.resizeCanvas, false);
 
         setInterval(()=> {
@@ -34,7 +35,7 @@ export class Game {
 
     private render():void {
         this.context.save();
-        this.context.scale(2,2);
+        this.context.scale(3,3);
         this.level.render(this.context);
         this.context.restore();
     }
@@ -48,6 +49,8 @@ export class Game {
         window.requestAnimationFrame(()=> {
             window.stats.begin();
             this.canvas.width = this.canvas.width;
+            this.context.msImageSmoothingEnabled=false;
+            this.context.imageSmoothingEnabled=false;
             this.render();
             this.renderFrame();
             window.stats.end();
