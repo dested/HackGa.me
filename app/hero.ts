@@ -24,6 +24,7 @@ export class Hero {
     private mayJump:boolean = true;
     private wasOnGround:boolean = false;
     private xPic:number;
+    private bumped:boolean;
 
 
     constructor(level:Level) {
@@ -58,6 +59,7 @@ export class Hero {
 
 
         if (KeyManager.keys[Keys.Jump] || (this.jumpTime < 0 && !this.onGround && !this.sliding)) {
+            this.bumped=false;
             if (this.jumpTime < 0) {
                 this.xa = this.xJumpSpeed;
                 this.ya = -this.jumpTime * this.yJumpSpeed;
@@ -164,8 +166,6 @@ export class Hero {
 
         if (this.ducking) runFrame = 14;
         this.height = this.ducking ? 12 : 24;
-        console.log(this.xa);
-
         this.xPic = runFrame;
     }
 
@@ -186,6 +186,7 @@ export class Hero {
             if (!this.move(0, -8)) return false;
             ya += 8;
         }
+
 
         var collide = false;
         if (ya > 0) {
@@ -265,8 +266,9 @@ export class Hero {
 
         //var block = this.level.getBlock(x, y);
 
-        if (blocking && ya < 0) {
-            // bump(x, y, large);
+        if (!this.bumped && blocking && ya < 0) {
+            this.level.bump(x, y);
+            this.bumped=true;
         }
 
         return blocking;

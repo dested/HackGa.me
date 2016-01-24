@@ -9,19 +9,32 @@ export class Level {
     constructor() {
         console.log('hilevel');
         this.tiles = [];
-
         for (var x = 0; x < 100; x++) {
             this.tiles[x] = [];
+
             for (var y = 0; y < 30; y++) {
-                this.tiles[x][y] = (y == 25 && (x<5 || Math.random()*100<80));
-                if(x==37){
+                this.tiles[x][y] = false;
+            }
+        }
+        for (var x = 0; x < 100; x++) {
+            for (var y = 0; y < 30; y += Math.random() * 4 | 0) {
+
+                if (Math.random() * 100 < 8) {
+                    this.tiles[x][y] = true;
+                    this.tiles[x - 1] && (this.tiles[x - 1][y] = true);
+                    this.tiles[x + 1] && (this.tiles[x + 1][y] = true);
+                }
+                continue;
+
+                this.tiles[x][y] = (y == 25 && (x < 5 || Math.random() * 100 < 80));
+                if (x == 37) {
                     this.tiles[x][y] = true;
                 }
-                if(x==34 && y<24 && y>10){
+                if (x == 34 && y < 24 && y > 10) {
                     this.tiles[x][y] = true;
                 }
 
-                if(x==29 && y<21&& y>7){
+                if (x == 29 && y < 21 && y > 7) {
                     this.tiles[x][y] = true;
                 }
 
@@ -66,6 +79,10 @@ export class Level {
          blocking |= (ya < 0) && ((TILE_BEHAVIORS[block & 0xff]) & BIT_BLOCK_LOWER) > 0;
 
          return blocking;*/
+    }
+
+    bump(x:Number, y:Number):void {
+        this.tiles[x][y] = false;
     }
 }
 //http://gamedev.stackexchange.com/questions/74387/platformer-collision-detection-order
