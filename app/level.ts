@@ -12,16 +12,16 @@ export class Level {
 
         for (var x = 0; x < 100; x++) {
             this.tiles[x] = [];
-            for (var y = 0; y < 20; y++) {
-                this.tiles[x][y] = (y == 15);
-                if(x==27){
+            for (var y = 0; y < 30; y++) {
+                this.tiles[x][y] = (y == 25 && (x<5 || Math.random()*100<80));
+                if(x==37){
                     this.tiles[x][y] = true;
                 }
-                if(x==24 && y<14){
+                if(x==34 && y<24 && y>10){
                     this.tiles[x][y] = true;
                 }
 
-                if(x==15 && y<11){
+                if(x==29 && y<21&& y>7){
                     this.tiles[x][y] = true;
                 }
 
@@ -42,7 +42,7 @@ export class Level {
         var blockAsset = AssetManager.getAsset('block');
 
         for (var x = 0; x < 100; x++) {
-            for (var y = 0; y < 20; y++) {
+            for (var y = 0; y < 30; y++) {
                 if (this.tiles[x][y]) {
                     context.drawImage(blockAsset, x * 16, y * 16);
                 }

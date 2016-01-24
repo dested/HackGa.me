@@ -35,7 +35,7 @@ export class Game {
 
     private render():void {
         this.context.save();
-        this.context.scale(3, 3);
+        this.context.scale(2, 2);
         this.level.render(this.context);
         this.context.restore();
     }

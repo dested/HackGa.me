@@ -145,13 +145,26 @@ export class Hero {
     private calcPic():void {
         var runFrame = ((this.runTime / 20) | 0) % 4;
         if (runFrame == 3) runFrame = 1;
+        if (Math.abs(this.xa) >= 9) {
+            runFrame += 3;
+        }
+
         if (!this.onGround) {
-            if (Math.abs(this.xa) > 10) runFrame = 7;
+            if (Math.abs(this.xa) >= 9) {
+                runFrame = 7;
+            }
             else runFrame = 6;
+        }
+
+        if (this.onGround && ((this.facing == -1 && this.xa > 0) || (this.facing == 1 && this.xa < 0)))
+        {
+            if (this.xa > 1 || this.xa < -1) runFrame = 9 ;
+
         }
 
         if (this.ducking) runFrame = 14;
         this.height = this.ducking ? 12 : 24;
+        console.log(this.xa);
 
         this.xPic = runFrame;
     }
