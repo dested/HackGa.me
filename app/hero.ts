@@ -68,7 +68,7 @@ export class Hero {
             else if (this.onGround && this.mayJump) {
                 this.xJumpSpeed = 0;
                 this.yJumpSpeed = -1.9;
-                this.jumpTime = this.xa > 8 ? 8 : 7;
+                this.jumpTime = Math.abs(this.xa) > 8 ? 8 : 7;
 
                 this.ya = this.jumpTime * this.yJumpSpeed;
                 this.onGround = false;
@@ -125,6 +125,7 @@ export class Hero {
         this.onGround = false;
         this.move(this.xa, 0, 'x');
         this.move(0, this.ya, 'y');
+        if (this.onGround)this.ya = 0;
 
         this.ya *= HeroConstants.gravity;
         if (this.onGround) {
