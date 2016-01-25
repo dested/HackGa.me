@@ -68,7 +68,8 @@ export class Hero {
             else if (this.onGround && this.mayJump) {
                 this.xJumpSpeed = 0;
                 this.yJumpSpeed = -1.9;
-                this.jumpTime = 7;
+                this.jumpTime = this.xa > 8 ? 8 : 7;
+
                 this.ya = this.jumpTime * this.yJumpSpeed;
                 this.onGround = false;
                 this.sliding = false;
@@ -122,8 +123,8 @@ export class Hero {
             this.ya *= .5;
         }
         this.onGround = false;
-        this.move(this.xa, 0,'x');
-        this.move(0, this.ya,'y');
+        this.move(this.xa, 0, 'x');
+        this.move(0, this.ya, 'y');
 
         this.ya *= HeroConstants.gravity;
         if (this.onGround) {
@@ -167,28 +168,28 @@ export class Hero {
         this.xPic = runFrame;
     }
 
-    private move(xa:number, ya:number,type:string):boolean {
+    private move(xa:number, ya:number, type:string):boolean {
 
 
         while (xa > 8) {
-            if (!this.move(8, 0,type)) return false;
+            if (!this.move(8, 0, type)) return false;
             xa -= 8;
         }
         while (xa < -8) {
-            if (!this.move(-8, 0,type)) return false;
+            if (!this.move(-8, 0, type)) return false;
             xa += 8;
         }
         while (ya > 8) {
-            if (!this.move(0, 8,type)) return false;
+            if (!this.move(0, 8, type)) return false;
             ya -= 8;
         }
         while (ya < -8) {
-            if (!this.move(0, -8,type)) return false;
+            if (!this.move(0, -8, type)) return false;
             ya += 8;
         }
 
         var collide = false;
-        if (ya > 0 || (type=='y' && ya==0)) {
+        if (ya > 0 || (type == 'y' && ya == 0)) {
             if (this.isBlocking(this.x + xa - this.width, this.y + ya, xa, 0)) collide = true;
             else if (this.isBlocking(this.x + xa + this.width, this.y + ya, xa, 0)) collide = true;
             else if (this.isBlocking(this.x + xa - this.width, this.y + ya + 1, xa, ya)) collide = true;
@@ -200,17 +201,17 @@ export class Hero {
             else if (collide || this.isBlocking(this.x + xa + this.width, this.y + ya - this.height, xa, ya)) collide = true;
         }
         if (xa > 0) {
-            this. sliding = true;
-            if (this.isBlocking(this.x + xa + this.width,this. y + ya -this. height, xa, ya)) collide = true;
+            this.sliding = true;
+            if (this.isBlocking(this.x + xa + this.width, this.y + ya - this.height, xa, ya)) collide = true;
             else this.sliding = false;
-            if (this.isBlocking(this.x + xa + this.width,this. y + ya - this.height / 2, xa, ya)) collide = true;
+            if (this.isBlocking(this.x + xa + this.width, this.y + ya - this.height / 2, xa, ya)) collide = true;
             else this.sliding = false;
             if (this.isBlocking(this.x + xa + this.width, this.y + ya, xa, ya)) collide = true;
             else this.sliding = false;
         }
         if (xa < 0) {
-            this.  sliding = true;
-            if (this.isBlocking(this.x + xa -this. width, this.y + ya - this.height, xa, ya)) collide = true;
+            this.sliding = true;
+            if (this.isBlocking(this.x + xa - this.width, this.y + ya - this.height, xa, ya)) collide = true;
             else this.sliding = false;
             if (this.isBlocking(this.x + xa - this.width, this.y + ya - this.height / 2, xa, ya)) collide = true;
             else this.sliding = false;
@@ -218,23 +219,23 @@ export class Hero {
             else this.sliding = false;
         }
 
-        if(type == 'y' && ya == 0 && collide){
+        if (type == 'y' && ya == 0 && collide) {
             this.y = (((this.y - 1) / 16 + 1) | 0) * 16 - 1;
             this.onGround = true;
             return false;
         }
         if (collide) {
             if (xa < 0) {
-                this. x = (((this.x - this.width) / 16)|0) * 16 + this.width;
+                this.x = (((this.x - this.width) / 16) | 0) * 16 + this.width;
                 this.xa = 0;
             }
             if (xa > 0) {
-                this.  x = (((this.x + this.width) / 16 + 1)|0) * 16 - this.width - 1;
+                this.x = (((this.x + this.width) / 16 + 1) | 0) * 16 - this.width - 1;
                 this.xa = 0;
             }
             if (ya < 0) {
-                this.  y = (((this.y - this.height) / 16)|0) * 16 + this.height;
-                this. jumpTime = 0;
+                this.y = (((this.y - this.height) / 16) | 0) * 16 + this.height;
+                this.jumpTime = 0;
                 this.ya = 0;
             }
             if (ya > 0) {

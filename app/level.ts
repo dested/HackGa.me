@@ -32,7 +32,7 @@ export class Level {
                 if (x == 37) {
                     this.tiles[x][y] = true;
                 }
-                if (x == 34 && y < 24 && y > 10) {
+                if (x == 35 && y < 24 && y > 10) {
                     this.tiles[x][y] = true;
                 }
 
