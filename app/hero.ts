@@ -33,7 +33,7 @@ export class Hero {
 
     tick():void {
         //console.log(this.x, this.y, this.xa, this.ya);
-        var xSpeed = KeyManager.keys[Keys.Run] ? 1.2 : .6;
+        var xSpeed = KeyManager.keys[Keys.Run] && !this.ducking ? 1.2 : .6;
 
         this.wasOnGround = this.onGround;
 
@@ -59,7 +59,7 @@ export class Hero {
 
 
         if (KeyManager.keys[Keys.Jump] || (this.jumpTime < 0 && !this.onGround && !this.sliding)) {
-            this.bumped=false;
+            this.bumped = false;
             if (this.jumpTime < 0) {
                 this.xa = this.xJumpSpeed;
                 this.ya = -this.jumpTime * this.yJumpSpeed;
@@ -122,10 +122,8 @@ export class Hero {
             this.ya *= .5;
         }
         this.onGround = false;
-
-        this.move(this.xa, 0);
-        this.move(0, this.ya);
-
+        this.move(this.xa, 0,'x');
+        this.move(0, this.ya,'y');
 
         this.ya *= HeroConstants.gravity;
         if (this.onGround) {
@@ -138,9 +136,10 @@ export class Hero {
             this.ya += 3;
         }
 
-        if (Math.abs(this.ya) < 0.001) {
+        if (Math.abs(this.ya) < 0.1) {
             this.ya = 0;
         }
+
 
     }
 
@@ -158,9 +157,8 @@ export class Hero {
             else runFrame = 6;
         }
 
-        if (this.onGround && ((this.facing == -1 && this.xa > 0) || (this.facing == 1 && this.xa < 0)))
-        {
-            if (this.xa > 1 || this.xa < -1) runFrame = 9 ;
+        if (this.onGround && ((this.facing == -1 && this.xa > 0) || (this.facing == 1 && this.xa < 0))) {
+            if (this.xa > 1 || this.xa < -1) runFrame = 9;
 
         }
 
@@ -169,27 +167,28 @@ export class Hero {
         this.xPic = runFrame;
     }
 
-    private move(xa:number, ya:number):boolean {
+    private move(xa:number, ya:number,type:string):boolean {
+
+
         while (xa > 8) {
-            if (!this.move(8, 0)) return false;
+            if (!this.move(8, 0,type)) return false;
             xa -= 8;
         }
         while (xa < -8) {
-            if (!this.move(-8, 0)) return false;
+            if (!this.move(-8, 0,type)) return false;
             xa += 8;
         }
         while (ya > 8) {
-            if (!this.move(0, 8)) return false;
+            if (!this.move(0, 8,type)) return false;
             ya -= 8;
         }
         while (ya < -8) {
-            if (!this.move(0, -8)) return false;
+            if (!this.move(0, -8,type)) return false;
             ya += 8;
         }
 
-
         var collide = false;
-        if (ya > 0) {
+        if (ya > 0 || (type=='y' && ya==0)) {
             if (this.isBlocking(this.x + xa - this.width, this.y + ya, xa, 0)) collide = true;
             else if (this.isBlocking(this.x + xa + this.width, this.y + ya, xa, 0)) collide = true;
             else if (this.isBlocking(this.x + xa - this.width, this.y + ya + 1, xa, ya)) collide = true;
@@ -201,53 +200,50 @@ export class Hero {
             else if (collide || this.isBlocking(this.x + xa + this.width, this.y + ya - this.height, xa, ya)) collide = true;
         }
         if (xa > 0) {
-            this.sliding = true;
-
-            if (this.isBlocking(this.x + xa + this.width, this.y + ya - this.height, xa, ya)) collide = true;
+            this. sliding = true;
+            if (this.isBlocking(this.x + xa + this.width,this. y + ya -this. height, xa, ya)) collide = true;
             else this.sliding = false;
-
-            if (this.isBlocking(this.x + xa + this.width, this.y + ya - this.height / 2, xa, ya)) collide = true;
+            if (this.isBlocking(this.x + xa + this.width,this. y + ya - this.height / 2, xa, ya)) collide = true;
             else this.sliding = false;
-
             if (this.isBlocking(this.x + xa + this.width, this.y + ya, xa, ya)) collide = true;
             else this.sliding = false;
         }
         if (xa < 0) {
-            this.sliding = true;
-
-            if (this.isBlocking(this.x + xa - this.width, this.y + ya - this.height, xa, ya)) collide = true;
+            this.  sliding = true;
+            if (this.isBlocking(this.x + xa -this. width, this.y + ya - this.height, xa, ya)) collide = true;
             else this.sliding = false;
-
             if (this.isBlocking(this.x + xa - this.width, this.y + ya - this.height / 2, xa, ya)) collide = true;
             else this.sliding = false;
-
             if (this.isBlocking(this.x + xa - this.width, this.y + ya, xa, ya)) collide = true;
             else this.sliding = false;
         }
 
+        if(type == 'y' && ya == 0 && collide){
+            this.y = (((this.y - 1) / 16 + 1) | 0) * 16 - 1;
+            this.onGround = true;
+            return false;
+        }
         if (collide) {
             if (xa < 0) {
-                this.x = (((this.x - this.width) / 16) | 0) * 16 + this.width;
+                this. x = (((this.x - this.width) / 16)|0) * 16 + this.width;
                 this.xa = 0;
             }
             if (xa > 0) {
-                this.x = (((this.x + this.width) / 16 + 1) | 0) * 16 - this.width - 1;
+                this.  x = (((this.x + this.width) / 16 + 1)|0) * 16 - this.width - 1;
                 this.xa = 0;
             }
             if (ya < 0) {
-                this.y = (((this.y - this.height) / 16) | 0) * 16 + this.height;
-                this.jumpTime = 0;
+                this.  y = (((this.y - this.height) / 16)|0) * 16 + this.height;
+                this. jumpTime = 0;
                 this.ya = 0;
-                return true;
-
             }
             if (ya > 0) {
                 this.y = (((this.y - 1) / 16 + 1) | 0) * 16 - 1;
                 this.onGround = true;
-                return true;
             }
             return false;
-        } else {
+        }
+        else {
             this.x += xa;
             this.y += ya;
             return true;
@@ -268,7 +264,7 @@ export class Hero {
 
         if (!this.bumped && blocking && ya < 0) {
             this.level.bump(x, y);
-            this.bumped=true;
+            this.bumped = true;
         }
 
         return blocking;
@@ -299,6 +295,7 @@ export class Hero {
         if (xFlipPic) {
             context.scale(-1, 1);
         }
+        console.log(this.xa, this.ya);
         context.drawImage(AssetManager.getSheet('hero', this.xPic, 0), 0, 0);
 
         context.restore();

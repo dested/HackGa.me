@@ -17,16 +17,18 @@ export class Level {
             }
         }
         for (var x = 0; x < 100; x++) {
-            for (var y = 0; y < 30; y += Math.random() * 4 | 0) {
+            for (var y = 0; y < 30; y += 1) {
 
+/*
                 if (Math.random() * 100 < 8) {
                     this.tiles[x][y] = true;
                     this.tiles[x - 1] && (this.tiles[x - 1][y] = true);
                     this.tiles[x + 1] && (this.tiles[x + 1][y] = true);
                 }
                 continue;
+*/
 
-                this.tiles[x][y] = (y == 25 && (x < 5 || Math.random() * 100 < 80));
+                this.tiles[x][y] = (y == 25 );
                 if (x == 37) {
                     this.tiles[x][y] = true;
                 }
